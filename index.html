@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sara Liefmann</title>
+  <meta name="description" content="Diseñadora de marca y estratega visual. Storyteller, creadora de narrativas, ilustradora."/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+/* ═══════════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Palette */
+  --bg:       #F6F1EB;
+  --surface:  #EDE6DB;
+  --rule:     #D8D0C4;
+  --muted:    #968E84;
+  --ink:      #1A1714;
+  --ink-soft: rgba(26,23,20,0.6);
+
+  /* Type */
+  --serif: 'Cormorant', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+
+  /* Spacing (8px grid) */
+  --gutter: 56px;
+  --gap:    2px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+/* ═══════════════════════════════════════════════
+   INTRO SCREEN
+═══════════════════════════════════════════════ */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.7s cubic-bezier(0.76,0,0.24,1), visibility 0.7s;
+}
+#intro.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+.intro-mark {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(246,241,235,0.4);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 64px;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(246,241,235,0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s;
+}
+nav.pinned { border-bottom-color: var(--rule); }
+
+.nav-logo {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+}
+.lang-btn .lc { transition: color 0.2s; }
+.lang-btn .lc.on { color: var(--ink); font-weight: 500; }
+.lang-btn .sl { color: var(--rule); }
+
+.nav-a {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-a:hover { color: var(--ink); }
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 100svh;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero-sup {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 32px;
+  padding-top: 88px;    /* nav height + extra */
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hero-display {
+  font-family: var(--serif);
+  font-weight: 300;
+  line-height: 0.87;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  /* fluid between 88px and 172px */
+  font-size: clamp(88px, 13vw, 172px);
+}
+
+.hero-display em {
+  display: block;
+  font-style: italic;
+  padding-left: 6vw;
+  color: var(--ink);
+}
+
+.hero-base {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 40px 0 64px;
+  border-top: 1px solid var(--rule);
+  margin-top: 40px;
+}
+
+.hero-tag {
+  max-width: 400px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.hero-index {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rule);
+  text-align: right;
+  line-height: 1.9;
+}
+
+/* ═══════════════════════════════════════════════
+   MARQUEE
+═══════════════════════════════════════════════ */
+.marquee-wrap {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 0;
+  animation: scroll-left 22s linear infinite;
+}
+
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 32px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.marquee-item::before {
+  content: '·';
+  color: var(--rule);
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION HEADER
+═══════════════════════════════════════════════ */
+.sec {
+  padding: 112px var(--gutter) 80px;
+}
+
+.sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 72px;
+}
+
+.sec-n {
+  font-family: var(--serif);
+  font-size: 11px;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.sec-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════════
+   PROJECT GRID
+═══════════════════════════════════════════════ */
+.proj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+/* ─ card shell ─ */
+.pc {
+  position: relative;
+  background: var(--surface);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.5s;
+}
+.pc:hover { background: #E5DDD0; }
+
+.pc.hero-card { grid-column: span 2; aspect-ratio: 21 / 8; }
+.pc.half-card { aspect-ratio: 4 / 3; }
+
+/* reveal line from bottom */
+.pc::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.76,0,0.24,1);
+}
+.pc:hover::before { transform: scaleX(1); }
+
+/* ─ card inner layout ─ */
+.pc-in {
+  position: absolute;
+  inset: 0;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pc-num {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+}
+
+.pc-arrow {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--muted);
+  transition: border-color 0.3s, color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pc:hover .pc-arrow {
+  border-color: var(--ink);
+  color: var(--ink);
+  transform: rotate(45deg) scale(1.05);
+}
+
+/* ─ card text ─ */
+.pc-cat {
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.pc-name {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.hero-card .pc-name { font-size: clamp(28px, 3.8vw, 58px); }
+.half-card .pc-name { font-size: clamp(22px, 2.5vw, 38px); }
+
+.pc-desc {
+  font-size: 12.5px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 480px;
+  margin-top: 14px;
+}
+.half-card .pc-desc { font-size: 12px; }
+
+.pc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-top: 24px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.pc-cta-line {
+  width: 28px;
+  height: 1px;
+  background: var(--ink);
+  transition: width 0.4s;
+}
+.pc:hover .pc-cta { opacity: 1; transform: translateX(0); }
+.pc:hover .pc-cta-line { width: 44px; }
+
+/* ═══════════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════════ */
+.about {
+  background: var(--ink);
+  padding: 112px var(--gutter);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 80px;
+  align-items: end;
+}
+
+.about-big {
+  font-family: var(--serif);
+  font-size: clamp(40px, 5.5vw, 82px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--bg);
+}
+
+.about-r {}
+
+.about-label {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.about-body {
+  font-size: 14.5px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(246,241,235,0.65);
+  margin-bottom: 40px;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill {
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246,241,235,0.4);
+  border: 1px solid rgba(246,241,235,0.1);
+  padding: 7px 14px;
+  transition: color 0.25s, border-color 0.25s;
+}
+.skill:hover { color: rgba(246,241,235,0.75); border-color: rgba(246,241,235,0.28); }
+
+/* ═══════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════ */
+.contact {
+  padding: 144px var(--gutter) 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.contact-label {
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.contact-link {
+  font-family: var(--serif);
+  font-size: clamp(24px, 4vw, 64px);
+  font-weight: 300;
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  line-height: 1.15;
+  transition: font-style 0.3s;
+}
+.contact-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--rule);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.76,0,0.24,1);
+}
+.contact-link:hover { font-style: italic; }
+.contact-link:hover::after { transform: scaleX(1); }
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer {
+  padding: 24px var(--gutter);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foot-l { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+
+.foot-r {
+  display: flex;
+  gap: 32px;
+}
+.foot-r a {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.foot-r a:hover { color: var(--ink); }
+
+/* ═══════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════ */
+.m-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,13,11,0.96);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.76,0,0.24,1);
+}
+.m-overlay.open { opacity: 1; pointer-events: all; }
+
+.m-box {
+  width: 100%;
+  max-width: 1100px;
+  transform: translateY(24px) scale(0.98);
+  transition: transform 0.5s cubic-bezier(0.34,1.2,0.64,1);
+}
+.m-overlay.open .m-box { transform: translateY(0) scale(1); }
+
+.m-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.m-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(246,241,235,0.8);
+}
+
+.m-close {
+  width: 36px;
+  height: 36px;
+  background: rgba(246,241,235,0.07);
+  border: 1px solid rgba(246,241,235,0.12);
+  color: rgba(246,241,235,0.7);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+}
+.m-close:hover { background: rgba(246,241,235,0.14); color: var(--bg); }
+
+.m-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.m-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 800px) {
+  :root { --gutter: 24px; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .pc.hero-card { grid-column: span 1; aspect-ratio: 4/3; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .hero-base { flex-direction: column; gap: 28px; align-items: flex-start; }
+  .hero-index { text-align: left; }
+  nav { padding: 0 var(--gutter); }
+  .m-overlay { padding: 20px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+  </style>
+</head>
+<body>
+
+<!-- ▸ INTRO -->
+<div id="intro"><span class="intro-mark">Sara Liefmann</span></div>
+
+<!-- ▸ NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Sara Liefmann</a>
+  <div class="nav-right">
+    <button class="lang-btn" onclick="toggleLang()">
+      <span class="lc on" id="lc-es">ES</span>
+      <span class="sl">/</span>
+      <span class="lc" id="lc-en">EN</span>
+    </button>
+    <a href="#work" class="nav-a" data-es="Trabajo" data-en="Work">Trabajo</a>
+    <a href="#contact" class="nav-a" data-es="Contacto" data-en="Contact">Contacto</a>
+  </div>
+</nav>
+
+<!-- ▸ HERO -->
+<section class="hero" id="home">
+  <div class="hero-sup">
+    <span data-es="Portafolio — 2026" data-en="Portfolio — 2026">Portafolio — 2026</span>
+    <span data-es="Diseño · Marca · Estrategia" data-en="Design · Brand · Strategy">Diseño · Marca · Estrategia</span>
+  </div>
+  <h1 class="hero-display">
+    Sara<em>Liefmann</em>
+  </h1>
+  <div class="hero-base">
+    <p class="hero-tag"
+       data-es="Diseñadora de marca y estratega visual. Storyteller, creadora de narrativas, ilustradora y amante de la moda."
+       data-en="Brand designer & visual strategist. Storyteller, narrative creator, illustrator and fashion lover.">
+      Diseñadora de marca y estratega visual. Storyteller, creadora de narrativas, ilustradora y amante de la moda.
+    </p>
+    <div class="hero-index">
+      <div>Universidad de los Andes</div>
+      <div data-es="Diseño Gráfico" data-en="Graphic Design">Diseño Gráfico</div>
+      <div>Bogotá, Colombia</div>
+    </div>
+  </div>
+</section>
+
+<!-- ▸ MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="mq">
+    <span class="marquee-item" data-es="Brand Identity" data-en="Brand Identity">Brand Identity</span>
+    <span class="marquee-item" data-es="Estrategia Visual" data-en="Visual Strategy">Estrategia Visual</span>
+    <span class="marquee-item" data-es="Storytelling" data-en="Storytelling">Storytelling</span>
+    <span class="marquee-item" data-es="Ilustración" data-en="Illustration">Ilustración</span>
+    <span class="marquee-item" data-es="Presentaciones" data-en="Presentations">Presentaciones</span>
+    <span class="marquee-item" data-es="Moda" data-en="Fashion">Moda</span>
+    <span class="marquee-item" data-es="Inteligencia Artificial" data-en="Artificial Intelligence">Inteligencia Artificial</span>
+    <span class="marquee-item" data-es="Diseño Editorial" data-en="Editorial Design">Diseño Editorial</span>
+    <!-- clone for seamless loop -->
+    <span class="marquee-item" data-es="Brand Identity" data-en="Brand Identity">Brand Identity</span>
+    <span class="marquee-item" data-es="Estrategia Visual" data-en="Visual Strategy">Estrategia Visual</span>
+    <span class="marquee-item" data-es="Storytelling" data-en="Storytelling">Storytelling</span>
+    <span class="marquee-item" data-es="Ilustración" data-en="Illustration">Ilustración</span>
+    <span class="marquee-item" data-es="Presentaciones" data-en="Presentations">Presentaciones</span>
+    <span class="marquee-item" data-es="Moda" data-en="Fashion">Moda</span>
+    <span class="marquee-item" data-es="Inteligencia Artificial" data-en="Artificial Intelligence">Inteligencia Artificial</span>
+    <span class="marquee-item" data-es="Diseño Editorial" data-en="Editorial Design">Diseño Editorial</span>
+  </div>
+</div>
+
+<!-- ▸ WORK -->
+<div class="sec" id="work">
+  <div class="sec-head">
+    <span class="sec-n">01</span>
+    <h2 class="sec-title" data-es="Trabajos seleccionados" data-en="Selected work">Trabajos seleccionados</h2>
+  </div>
+
+  <div class="proj-grid">
+
+    <!-- 01 -->
+    <div class="pc hero-card" onclick="openModal(0)">
+      <div class="pc-in">
+        <div class="pc-top">
+          <span class="pc-num">01 / 05</span>
+          <div class="pc-arrow">↗</div>
+        </div>
+        <div>
+          <p class="pc-cat" data-es="Estrategia · Resultados · 2026" data-en="Strategy · Results · 2026">Estrategia · Resultados · 2026</p>
+          <h3 class="pc-name">Resultados 2025 — GWS</h3>
+          <p class="pc-desc"
+             data-es="Overview del desempeño, estructura y prioridades estratégicas para 2026. Crecimiento, oportunidades de mercado y ejecución a través de canales, tecnología y activaciones de marca."
+             data-en="Performance overview, structure and strategic priorities for 2026. Growth, market opportunities and execution through channels, technology and brand activations.">
+            Overview del desempeño, estructura y prioridades estratégicas para 2026. Crecimiento, oportunidades de mercado y ejecución a través de canales, tecnología y activaciones de marca.
+          </p>
+          <div class="pc-cta">
+            <span data-es="Ver presentación" data-en="View presentation">Ver presentación</span>
+            <div class="pc-cta-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="pc half-card" onclick="openModal(1)">
+      <div class="pc-in">
+        <div class="pc-top">
+          <span class="pc-num">02 / 05</span>
+          <div class="pc-arrow">↗</div>
+        </div>
+        <div>
+          <p class="pc-cat" data-es="Branding · Duty Free · B2B" data-en="Branding · Duty Free · B2B">Branding · Duty Free · B2B</p>
+          <h3 class="pc-name">WS<br>Diplomatic</h3>
+          <p class="pc-desc"
+             data-es="Unidad especializada en duty free diplomático con portafolio curado, logística global y relaciones a largo plazo respaldadas por Falic Group."
+             data-en="Specialized diplomatic duty-free unit with a curated portfolio, global logistics and long-term relationships backed by Falic Group.">
+            Unidad especializada en duty free diplomático con portafolio curado, logística global y relaciones a largo plazo respaldadas por Falic Group.
+          </p>
+          <div class="pc-cta">
+            <span data-es="Ver presentación" data-en="View presentation">Ver presentación</span>
+            <div class="pc-cta-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="pc half-card" onclick="openModal(2)">
+      <div class="pc-in">
+        <div class="pc-top">
+          <span class="pc-num">03 / 05</span>
+          <div class="pc-arrow">↗</div>
+        </div>
+        <div>
+          <p class="pc-cat" data-es="Startup · Gamificación · SaaS" data-en="Startup · Gamification · SaaS">Startup · Gamificación · SaaS</p>
+          <h3 class="pc-name">Gamificación<br>Laboral</h3>
+          <p class="pc-desc"
+             data-es="Startup que reduce rotación laboral gamificando el trabajo. Motivación, herramientas y recompensas para impulsar desempeño y retención de talento."
+             data-en="Startup reducing employee turnover by gamifying work. Motivation, tools and rewards to boost performance and talent retention.">
+            Startup que reduce rotación laboral gamificando el trabajo. Motivación, herramientas y recompensas para impulsar desempeño y retención de talento.
+          </p>
+          <div class="pc-cta">
+            <span data-es="Ver presentación" data-en="View presentation">Ver presentación</span>
+            <div class="pc-cta-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="pc half-card" onclick="openModal(3)">
+      <div class="pc-in">
+        <div class="pc-top">
+          <span class="pc-num">04 / 05</span>
+          <div class="pc-arrow">↗</div>
+        </div>
+        <div>
+          <p class="pc-cat" data-es="AI · Recruiting · SaaS" data-en="AI · Recruiting · SaaS">AI · Recruiting · SaaS</p>
+          <h3 class="pc-name">Nodi —<br>AI Recruiting</h3>
+          <p class="pc-desc"
+             data-es="Plataforma de reclutamiento con IA que conecta talento y empresas mediante matching inteligente, automatización y decisiones de contratación basadas en datos."
+             data-en="AI-powered recruitment platform connecting talent and companies through intelligent matching, automation and data-driven hiring.">
+            Plataforma de reclutamiento con IA que conecta talento y empresas mediante matching inteligente, automatización y decisiones de contratación basadas en datos.
+          </p>
+          <div class="pc-cta">
+            <span data-es="Ver presentación" data-en="View presentation">Ver presentación</span>
+            <div class="pc-cta-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="pc half-card" onclick="openModal(4)">
+      <div class="pc-in">
+        <div class="pc-top">
+          <span class="pc-num">05 / 05</span>
+          <div class="pc-arrow">↗</div>
+        </div>
+        <div>
+          <p class="pc-cat" data-es="Transformación Digital · Salud" data-en="Digital Transformation · Health">Transformación Digital · Salud</p>
+          <h3 class="pc-name">Fomenthum</h3>
+          <p class="pc-desc"
+             data-es="Motor económico del Hospital San Vicente Fundación. Automatización de procesos para mejorar eficiencia, visibilidad, experiencia del cliente y ROI institucional."
+             data-en="Economic engine of Hospital San Vicente Fundación. Process automation to improve efficiency, visibility, client experience and institutional ROI.">
+            Motor económico del Hospital San Vicente Fundación. Automatización de procesos para mejorar eficiencia, visibilidad, experiencia del cliente y ROI institucional.
+          </p>
+          <div class="pc-cta">
+            <span data-es="Ver presentación" data-en="View presentation">Ver presentación</span>
+            <div class="pc-cta-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ▸ ABOUT -->
+<div class="about" id="about">
+  <div class="about-grid">
+    <div>
+      <h2 class="about-big"
+          data-es="Diseño que<br>cuenta historias."
+          data-en="Design that<br>tells stories.">
+        Diseño que<br>cuenta historias.
+      </h2>
+    </div>
+    <div>
+      <p class="about-label" data-es="Sobre mí" data-en="About me">Sobre mí</p>
+      <p class="about-body"
+         data-es="Diseñadora de la Universidad de los Andes, con énfasis en diseño gráfico. Trabajo en la intersección entre la estrategia de marca, el storytelling visual y la ilustración. Apasionada por la moda, la inteligencia artificial y la creación de narrativas que conectan con las personas."
+         data-en="Designer from Universidad de los Andes, with a focus on graphic design. I work at the intersection of brand strategy, visual storytelling and illustration. Passionate about fashion, artificial intelligence and crafting narratives that truly connect with people.">
+        Diseñadora de la Universidad de los Andes, con énfasis en diseño gráfico. Trabajo en la intersección entre la estrategia de marca, el storytelling visual y la ilustración. Apasionada por la moda, la inteligencia artificial y la creación de narrativas que conectan con las personas.
+      </p>
+      <div class="skill-list">
+        <span class="skill">Brand Design</span>
+        <span class="skill">Storytelling</span>
+        <span class="skill" data-es="Ilustración" data-en="Illustration">Ilustración</span>
+        <span class="skill" data-es="Estrategia Visual" data-en="Visual Strategy">Estrategia Visual</span>
+        <span class="skill">AI</span>
+        <span class="skill" data-es="Moda" data-en="Fashion">Moda</span>
+        <span class="skill" data-es="Diseño Editorial" data-en="Editorial Design">Diseño Editorial</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ CONTACT -->
+<div class="contact" id="contact">
+  <p class="contact-label" data-es="¿Trabajamos juntos?" data-en="Let's work together">¿Trabajamos juntos?</p>
+  <a href="mailto:Saraliefmann06@gmail.com" class="contact-link">
+    Saraliefmann06@gmail.com
+  </a>
+</div>
+
+<!-- ▸ FOOTER -->
+<footer>
+  <span class="foot-l">© 2026 Sara Liefmann</span>
+  <div class="foot-r">
+    <a href="#work" data-es="Trabajo" data-en="Work">Trabajo</a>
+    <a href="#about" data-es="Sobre mí" data-en="About">Sobre mí</a>
+    <a href="mailto:Saraliefmann06@gmail.com" data-es="Contacto" data-en="Contact">Contacto</a>
+  </div>
+</footer>
+
+<!-- ▸ MODAL -->
+<div class="m-overlay" id="modal" onclick="bgClose(event)">
+  <div class="m-box">
+    <div class="m-bar">
+      <span class="m-title" id="m-title"></span>
+      <button class="m-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="m-frame">
+      <iframe id="m-frame" src="" allowfullscreen allow="autoplay"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ SCRIPT -->
+<script>
+/* ── data ── */
+const P = [
+  { es:"Resultados 2025 — GWS",   en:"Results 2025 — GWS",
+    src:"https://drive.google.com/file/d/1ZzzaVQ5-KS7T3ro73KCsSr5xkkv10p0e/preview" },
+  { es:"GWS Diplomatic",            en:"GWS Diplomatic",
+    src:"https://drive.google.com/file/d/1Gv04J5CcyvIEaot9xWJTX-KbsxXC_Ohh/preview" },
+  { es:"Gamificación Laboral",     en:"Work Gamification",
+    src:"https://docs.google.com/presentation/d/11KFkqo83RQT990ry2jXQYAavWre5NDby/embed?start=false&loop=false&delayms=3000" },
+  { es:"Nodi — AI Recruiting",     en:"Nodi — AI Recruiting",
+    src:"https://docs.google.com/presentation/d/1B-lS-u10wZCy0oy0XsiB3_iLi1ijxM1I/embed?start=false&loop=false&delayms=3000" },
+  { es:"Fomenthum",                en:"Fomenthum",
+    src:"https://docs.google.com/presentation/d/1MaabQ2d6_Qbxe9qbGE4SGCAjCnFn_o5l/embed?start=false&loop=false&delayms=3000" }
+];
+
+/* ── lang ── */
+var siteLang = 'es';
+
+function toggleLang() {
+  siteLang = siteLang === 'es' ? 'en' : 'es';
+  document.getElementById('lc-es').classList.toggle('on', siteLang === 'es');
+  document.getElementById('lc-en').classList.toggle('on', siteLang === 'en');
+  document.querySelectorAll('[data-es]').forEach(function(el) {
+    var v = el.getAttribute('data-' + siteLang);
+    if (!v) return;
+    if (el.tagName === 'H2' && el.classList.contains('about-big')) el.innerHTML = v;
+    else el.textContent = v;
+  });
+}
+
+/* ── intro ── */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('intro').classList.add('hide'), 900);
+});
+
+/* ── nav scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('pinned', scrollY > 30);
+}, { passive: true });
+
+/* ── modal ── */
+function openModal(i) {
+  var p = P[i];
+  document.getElementById('m-title').textContent = p[siteLang] || p.es;
+  document.getElementById('m-frame').src = p.src;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('m-frame').src = '';
+  document.body.style.overflow = '';
+}
+function bgClose(e) { if (e.target === document.getElementById('modal')) closeModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
