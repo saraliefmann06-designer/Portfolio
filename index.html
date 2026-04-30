@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sara Liefmann</title>
+  <title>Sara Liefmann Rubiano</title>
   <meta name="description" content="Diseñadora de marca y estratega visual. Storyteller, creadora de narrativas, ilustradora."/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -294,10 +294,36 @@ nav.pinned { border-bottom-color: var(--rule); }
   overflow: hidden;
   transition: background 0.5s;
 }
-.pc:hover { background: #E5DDD0; }
 
 .pc.hero-card { grid-column: span 2; aspect-ratio: 21 / 8; }
 .pc.half-card { aspect-ratio: 4 / 3; }
+
+/* thumbnail background */
+.pc-thumb {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.65s cubic-bezier(0.25,0.46,0.45,0.94),
+              transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.pc:hover .pc-thumb {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* dark overlay on hover */
+.pc-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(15,13,11,0.62);
+  opacity: 0;
+  transition: opacity 0.55s;
+  z-index: 1;
+}
+.pc:hover .pc-dim { opacity: 1; }
 
 /* reveal line from bottom */
 .pc::before {
@@ -305,12 +331,25 @@ nav.pinned { border-bottom-color: var(--rule); }
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 2px;
-  background: var(--ink);
+  background: rgba(244,239,232,0.6);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.55s cubic-bezier(0.76,0,0.24,1);
+  z-index: 3;
 }
 .pc:hover::before { transform: scaleX(1); }
+
+/* text color changes on hover */
+.pc:hover .pc-num  { color: rgba(244,239,232,0.45); }
+.pc:hover .pc-cat  { color: rgba(244,239,232,0.55); }
+.pc:hover .pc-name { color: var(--bg); }
+.pc:hover .pc-desc { color: rgba(244,239,232,0.65); }
+.pc:hover .pc-arrow {
+  border-color: rgba(244,239,232,0.35);
+  color: var(--bg);
+}
+.pc:hover .pc-cta { color: var(--bg); }
+.pc:hover .pc-cta-line { background: var(--bg); }
 
 /* ─ card inner layout ─ */
 .pc-in {
@@ -320,6 +359,7 @@ nav.pinned { border-bottom-color: var(--rule); }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .pc-top {
@@ -620,11 +660,11 @@ footer {
 <body>
 
 <!-- ▸ INTRO -->
-<div id="intro"><span class="intro-mark">Sara Liefmann</span></div>
+<div id="intro"><span class="intro-mark">Sara Liefmann Rubiano</span></div>
 
 <!-- ▸ NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">Sara Liefmann</a>
+  <a href="#" class="nav-logo">Sara Liefmann Rubiano</a>
   <div class="nav-right">
     <button class="lang-btn" onclick="toggleLang()">
       <span class="lc on" id="lc-es">ES</span>
@@ -693,6 +733,8 @@ footer {
 
     <!-- 01 -->
     <div class="pc hero-card" onclick="openModal(0)">
+      <div class="pc-thumb" style="background-image:url('https://drive.google.com/thumbnail?id=1oH7qZbBQNMIroNyNtF3pzIPMqdDaEkmI&sz=w1200')"></div>
+      <div class="pc-dim"></div>
       <div class="pc-in">
         <div class="pc-top">
           <span class="pc-num">01 / 05</span>
@@ -716,6 +758,8 @@ footer {
 
     <!-- 02 -->
     <div class="pc half-card" onclick="openModal(1)">
+      <div class="pc-thumb" style="background-image:url('https://drive.google.com/thumbnail?id=1hXpJqnnCaj0yywzFFiqwHqsqBXU-EfzB&sz=w1200')"></div>
+      <div class="pc-dim"></div>
       <div class="pc-in">
         <div class="pc-top">
           <span class="pc-num">02 / 05</span>
@@ -739,6 +783,8 @@ footer {
 
     <!-- 03 -->
     <div class="pc half-card" onclick="openModal(2)">
+      <div class="pc-thumb" style="background-image:url('https://docs.google.com/presentation/d/11KFkqo83RQT990ry2jXQYAavWre5NDby/export/jpeg')"></div>
+      <div class="pc-dim"></div>
       <div class="pc-in">
         <div class="pc-top">
           <span class="pc-num">03 / 05</span>
@@ -762,6 +808,8 @@ footer {
 
     <!-- 04 -->
     <div class="pc half-card" onclick="openModal(3)">
+      <div class="pc-thumb" style="background-image:url('https://docs.google.com/presentation/d/1B-lS-u10wZCy0oy0XsiB3_iLi1ijxM1I/export/jpeg')"></div>
+      <div class="pc-dim"></div>
       <div class="pc-in">
         <div class="pc-top">
           <span class="pc-num">04 / 05</span>
@@ -785,6 +833,8 @@ footer {
 
     <!-- 05 -->
     <div class="pc half-card" onclick="openModal(4)">
+      <div class="pc-thumb" style="background-image:url('https://docs.google.com/presentation/d/1MaabQ2d6_Qbxe9qbGE4SGCAjCnFn_o5l/export/jpeg')"></div>
+      <div class="pc-dim"></div>
       <div class="pc-in">
         <div class="pc-top">
           <span class="pc-num">05 / 05</span>
@@ -852,7 +902,7 @@ footer {
 
 <!-- ▸ FOOTER -->
 <footer>
-  <span class="foot-l">© 2026 Sara Liefmann</span>
+  <span class="foot-l">© 2026 Sara Liefmann Rubiano</span>
   <div class="foot-r">
     <a href="#work" data-es="Trabajo" data-en="Work">Trabajo</a>
     <a href="#about" data-es="Sobre mí" data-en="About">Sobre mí</a>
